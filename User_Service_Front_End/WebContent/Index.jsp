@@ -1,6 +1,48 @@
 <%@ page import="model.User" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+    <%
+    //Save---------------------------------
+    if (request.getParameter("userCode") != null)
+    {
+    	 User userObj = new User();
+	     String stsMsg = "";
+	    //Insert--------------------------
+	    if (request.getParameter("hidUserIDSave") == "")
+	     {
+	     stsMsg = userObj.RegisterUser(request.getParameter("userCode"),
+				 request.getParameter("Name"),
+				 request.getParameter("NIC"),
+				 request.getParameter("email"),
+				 request.getParameter("phone"),
+				 request.getParameter("userType"),
+				 request.getParameter("username"),
+				 request.getParameter("password"));
+     }
+    else//Update----------------------
+     {
+	     stsMsg = userObj.EditUserDetails(request.getParameter("hidUserIDSave"),
+	    		 request.getParameter("userCode"),
+				 request.getParameter("Name"),
+				 request.getParameter("NIC"),
+				 request.getParameter("email"),
+				 request.getParameter("phone"),
+				 request.getParameter("userType"),
+				 request.getParameter("username"),
+				 request.getParameter("password"));
+     }
+     session.setAttribute("statusMsg", stsMsg);
+    }
+    //Delete-----------------------------
+    if (request.getParameter("hidUserIDDelete") != null)
+    {
+    	User userObj = new User();
+	     String stsMsg =userObj.deleteUser(request.getParameter("hidUserIDDelete"));
+	     session.setAttribute("statusMsg", stsMsg);
+    }
+    %>
+    
 <!DOCTYPE html>
 <html>
 <head>
