@@ -12,10 +12,10 @@
 	    if (request.getParameter("hidUserIDSave") == "")
 	     {
 	     stsMsg = userObj.RegisterUser(request.getParameter("userCode"),
-				 request.getParameter("Name"),
+				 request.getParameter("name"),
 				 request.getParameter("NIC"),
-				 request.getParameter("email"),
-				 request.getParameter("phone"),
+				 request.getParameter("userEmail"),
+				 request.getParameter("userPhone"),
 				 request.getParameter("userType"),
 				 request.getParameter("username"),
 				 request.getParameter("password"));
@@ -24,10 +24,10 @@
      {
 	     stsMsg = userObj.EditUserDetails(request.getParameter("hidUserIDSave"),
 	    		 request.getParameter("userCode"),
-				 request.getParameter("Name"),
+				 request.getParameter("name"),
 				 request.getParameter("NIC"),
-				 request.getParameter("email"),
-				 request.getParameter("phone"),
+				 request.getParameter("userEmail"),
+				 request.getParameter("userPhone"),
 				 request.getParameter("userType"),
 				 request.getParameter("username"),
 				 request.getParameter("password"));
@@ -55,13 +55,13 @@
 <body>
 	<div class="container"><div class="row"><div class="col-6">
 	<h1>User Management</h1>
-	<form id="formUser" name="formUser">
+	<form id="formUser" name="formUser" action="index.jsp">
 	 User code:
 	 <input id="userCode" name="userCode" type="text"  
 	 class="form-control" placeholder="Please provide your user code"><br>
 	
 	 full Name:
-	 <input id="Name" name="Name" type="text"  
+	 <input id="name" name="name" type="text"  
 	 class="form-control" class="form-control" placeholder="Please provide your Full Name"><br>
 	 
 	 NIC: 
@@ -69,15 +69,15 @@
 	 class="form-control" placeholder="Please provide your NIC number" name="NIC"><br>
 			 
 	 Email: 
-	 <input id="email" name="email" type="email" 
+	 <input id="userEmail" name="userEmail" type="email" 
 	 class="form-control" placeholder="Please provide your email"><br>
 	 
 	 Contact Number: 
-	 <input id="phone" name="phone" type="number" 
+	 <input id="userPhone" name="userPhone" type="text" 
 	 class="form-control" placeholder="Please provide your Contact Number"><br>
 	 
 	 User Type: 
-	 <select name="userType" id="usertype" class="form-control" >
+	 <select name="userType" id="userType" class="form-control" >
 			<option value="admin">Admin</option>
       		<option value="researcher">Researcher</option>
       		<option value="Customer">Customer</option>
@@ -88,7 +88,7 @@
 	 class="form-control" placeholder="Please provide your User Name"><br>
 	 
 	 Password: 
-	 <input name="password" type="text" 
+	 <input name="password" type="password" 
 	 class="form-control" placeholder="Please provide your password"><br>
 	 
 	 <input id="btnSave" name="btnSave" type="button" value="Save"
@@ -101,7 +101,7 @@
 	<div id="alertSuccess" class="alert alert-success"></div>
 	<div id="alertError" class="alert alert-danger"></div>
 	<br>
-	<div id="divItemsGrid">
+	<div id="divUsersGrid">
 	 <%
 	 User userObj = new User();
 	 out.print(userObj.readUserDetails());

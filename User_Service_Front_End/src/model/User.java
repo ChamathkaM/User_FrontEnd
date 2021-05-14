@@ -52,12 +52,14 @@ public class User {
 					//execute the statement
 					 preparedStmt.execute();
 					 con.close();
-					 output = "Inserted successfully";
+					 String newUsers = readUserDetails(); 
+					 output = "{\"status\":\"success\", \"data\": \"" + 
+							 newUsers + "\"}"; 
 		    		
 		    	}
 			catch (Exception e)
 			{
-			output = "Error while inserting";
+			output ="{\"status\":\"error\", \"data\": \"Error while inserting the User.\"}"; 
 			System.err.println(e.getMessage());
 			}
 	return output;
@@ -82,14 +84,16 @@ public class User {
 		 + "<th>Phone</th>"
 		 + "<th>Type</th>"
 		 + "<th>UserName</th>"
-		 + "<th>Password</th>";
+		 + "<th>Password</th>"
+		 +"<th>Update</th>"
+		 +"<th>Remove</th></tr>";
 		 String query = "select * from users";
 		 Statement stmt = con.createStatement();
 		 ResultSet rs = stmt.executeQuery(query);
 		 // iterate through the rows in the result set
 		 while (rs.next())
 		 {
-			 String userID = Integer.toString(rs.getInt("userID"));
+			 String userId = Integer.toString(rs.getInt("userId"));
 			 String userCode = rs.getString("userCode");
 			 String name = rs.getString("name");
 			 String NIC = rs.getString("NIC");
@@ -99,7 +103,7 @@ public class User {
 			 String username = rs.getString("username");
 			 String password = rs.getString("password");
 			 // Add a row into the html table
-			 output += "<tr><td><input id='hidUserIDUpdate'name='hidUserIDUpdate'type='hidden' value='" + userID + "'>"+ userCode + "</td>";
+			 output += "<tr><td><input id='hidUserIDUpdate'name='hidUserIDUpdate'type='hidden' value='" + userId + "'>"+ userCode + "</td>";
 			 output += "<td>" + name + "</td>";
 			 output += "<td>" + NIC + "</td>";
 			 output += "<td>" + userEmail + "</td>"; 
@@ -108,11 +112,12 @@ public class User {
 			 output += "<td>" + username + "</td>";
 			 output += "<td>" + password + "</td>";
 			 // buttons
-			 output += "<td><input name='btnUpdate'type='button' value='Update'class=' btnUpdate btn btn-secondary'>"
-			 		+ "</td><td><form method='post' action='Index.jsp'>"
-			 		+ "<input name='btnRemove' type='submit'value='Remove' class='btn btn-danger'>"
-			 		+ "<input name='hidUserIDDelete' type='hidden'value='" + userID + "'>" + ""
-			 		+ "</form></td></tr>";
+			 output += "<td><input name='btnUpdate'type='button' value='Update'"
+			 		+ "class=' btnUpdate btn btn-secondary' data-userId'"+userId+"'></td>"
+			 		+ "<td><form method='post' action='items.jsp'><input name='btnRemove' type='button' value='Remove' "
+			 		+ "class='btnRemove btn btn-danger'>"
+			 		+ "<input name='hidUserIDDelete' type='hidden' value='" + userId + "'>"+" </form></td></tr>";
+			 		
 			
 		 }
 		 con.close();
@@ -171,8 +176,8 @@ public class User {
 			 output += "<td>" + username + "</td>";
 			 output += "<td>" + password + "</td>";
 			 // buttons
-			 output += "<input name='itemID' type='hidden' "
-			 + " value='" + userID + "'>"
+			 output += "<input name='userId' type='hidden' "
+			 + " value='" + userId + "'>"
 			 + "</form></td></tr>";
 		 }
 		 con.close();
@@ -216,11 +221,13 @@ public class User {
 		   // execute the statement
 		   preparedStmt.execute();
 		   con.close();
-		   output = "Updated successfully";
+		   String newUsers = readUserDetails(); 
+			 output = "{\"status\":\"success\", \"data\": \"" + 
+			 newUsers + "\"}"; 
 		   }
 	    catch (Exception e)
 		{
-		   output = "Error while updating the user";
+		   output = "{\"status\":\"error\", \"data\": \"Error while updating the User.\"}"; 
 		   System.err.println(e.getMessage());
 		}
 	    return output;
@@ -242,11 +249,13 @@ public class User {
 	   // execute the statement
 	   preparedStmt.execute();
 	   con.close();
-	   output = "Deleted successfully";
+	   String newUsers = readUserDetails(); 
+	   output = "{\"status\":\"success\", \"data\": \"" + 
+	   newUsers + "\"}"; 
 	   }
 	   catch (Exception e)
 	   {
-	   output = "Error while deleting the user";
+	   output ="{\"status\":\"error\", \"data\": \"Error while deleting the User.\"}";
 	   System.err.println(e.getMessage());
 	   }
 	   return output;
